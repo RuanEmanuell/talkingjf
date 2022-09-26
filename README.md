@@ -1,16 +1,16 @@
-# flutter_default
+### TalkingJF
 
-A new Flutter project.
+Uma mistura de Talking Ben com <a href="https://www.youtube.com/c/jogandofoddaci">JogandoFoddaci</a>, inspirado pelo <a href="https://www.youtube.com/watch?v=KmYRrOgL94E&t=970s">Talking Ben 10</a> feito pelo Gemaplys.
+Foi feito em Flutter com a ajuda da biblioteca <a href="https://pub.dev/packages/flame">Flame</a>, e da biblioteca <a href="https://pub.dev/packages/speech_to_text">speech_to_text</a> para reconhecimento de voz.
 
-## Getting Started
+### Aqui estão algumas imagens do projeto rodando:
+[Screenshot_226](https://user-images.githubusercontent.com/113607857/192342556-819cc1a5-3e5c-41be-852d-966a6f76ed33.png)
 
-This project is a starting point for a Flutter application.
+### Como rodar
 
-A few resources to get you started if this is your first Flutter project:
+Você precisará de <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, após inicializar em seu emulador ou dispositivo e <a href="https://docs .flutter.dev/get-started/codelab">iniciar um novo projeto do Flutter</a>, você transferirá os arquivos deste repositório para a pasta do seu projeto Flutter.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Esse projeto foi feito apenas por estudos e diversão!!
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Se sintam livres pra modificar, esse projeto é direito do JF!
+Espero que gostem :)
