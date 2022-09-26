@@ -3,8 +3,9 @@
 Uma mistura de Talking Ben com <a href="https://www.youtube.com/c/jogandofoddaci">JogandoFoddaci</a>, inspirado pelo <a href="https://www.youtube.com/watch?v=KmYRrOgL94E&t=970s">Talking Ben 10</a> feito pelo Gemaplys.
 Foi feito em Flutter com a ajuda da biblioteca <a href="https://pub.dev/packages/flame">Flame</a>, e da biblioteca <a href="https://pub.dev/packages/speech_to_text">speech_to_text</a> para reconhecimento de voz.
 
-### Aqui estão algumas imagens do projeto rodando:
-[Screenshot_226](https://user-images.githubusercontent.com/113607857/192342556-819cc1a5-3e5c-41be-852d-966a6f76ed33.png)
+### Aqui está uma print do projeto rodando:
+![Screenshot_226](https://user-images.githubusercontent.com/113607857/192342788-aa2ce168-3739-41db-b3f6-f3af6d70993f.png)
+
 
 ### Como rodar
 
