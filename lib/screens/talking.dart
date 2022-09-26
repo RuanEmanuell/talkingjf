@@ -9,6 +9,10 @@ import 'package:flame_audio/flame_audio.dart';
 import "package:flame/game.dart";
 
 
+var foddacer="gemaplys";
+var rng=Random();
+int talking=0;
+
 class TalkingScreen extends StatefulWidget{
   @override
   _TalkingScreen createState()=> _TalkingScreen();
@@ -17,14 +21,14 @@ class TalkingScreen extends StatefulWidget{
 
 class _TalkingScreen extends State<TalkingScreen>{
 
-
   void initState(){
     super.initState();
+    Future.delayed(Duration(milliseconds: 10), (){
+    setState((){
+      foddacer="saiko";
+    });
+    });
   }
-
-  
-
-
 
   @override
   Widget build(BuildContext context){
@@ -41,7 +45,7 @@ class _TalkingScreen extends State<TalkingScreen>{
                 foddacer="saiko";
               });
             }
-                  ),
+           ),
           ),
          Expanded(
            child: ElevatedButton(
@@ -51,7 +55,7 @@ class _TalkingScreen extends State<TalkingScreen>{
                 foddacer="gemaplys";
               });
             }
-                 ),
+           ),
          ),
          Expanded(
            child: ElevatedButton(
@@ -61,7 +65,7 @@ class _TalkingScreen extends State<TalkingScreen>{
                 foddacer="jean";
               });
             }
-                 ),
+          ),
          ),
 
         ]
@@ -70,15 +74,6 @@ class _TalkingScreen extends State<TalkingScreen>{
     );
   }
 }
-
-
-var foddacer="gemaplys";
-
-var rng=Random();
-
-int talking=0;
-
-
    void grabCellphone() async{
     talking=1;
   }
@@ -92,7 +87,7 @@ int talking=0;
       FlameAudio.bgm.play("nao${foddacer}.mp3");
     }
 
-    Future.delayed(Duration(milliseconds:750), (){
+    Future.delayed(Duration(milliseconds:650), (){
       talking=0;
       FlameAudio.bgm.stop();
     });
@@ -106,20 +101,17 @@ class TalkingGame extends FlameGame with HasTappables{
   late SpriteAnimation talkingAnimation;
   late Button button=Button();
 
-  late SpriteAnimationComponent gemaplys;
+  late SpriteAnimationComponent character;
   late SpriteComponent background;
 
-  double gemaplysSize=450;
+  double characterSize=450;
 
   @override
   Future<void> onLoad() async{
     await super.onLoad();
 
-    //Loading sprites and the music
-
-    final screenWidth=size[0];
-    final screenHeight=size[1];
-
+    var screenWidth=size[0];
+    var screenHeight=size[1];
 
     final spriteSheet=SpriteSheet(image:await images.load("${foddacer}animation.png"), srcSize:Vector2(650,1100));
 
@@ -128,11 +120,11 @@ class TalkingGame extends FlameGame with HasTappables{
     cellphoneAnimation=spriteSheet.createAnimation(row: 1, stepTime:.4, to:1);
 
   
-    gemaplys=SpriteAnimationComponent()
+    character=SpriteAnimationComponent()
     ..animation=cellphoneAnimation
-    ..size=size;
+    ..size=Vector2(screenWidth, screenHeight);
 
-    add(gemaplys);
+    add(character);
 
     button=Button()
     ..sprite=await loadSprite("button.webp")
@@ -149,13 +141,13 @@ class TalkingGame extends FlameGame with HasTappables{
     super.update(dt);
 
     if(talking==0){
-      gemaplys.animation=idleAnimation;
+      character.animation=idleAnimation;
     }
     if(talking==1){
-      gemaplys.animation=cellphoneAnimation;
+      character.animation=cellphoneAnimation;
     }
     if(talking==2){
-      gemaplys.animation=talkingAnimation;
+      character.animation=talkingAnimation;
     }
     
   }
