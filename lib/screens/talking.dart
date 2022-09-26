@@ -7,16 +7,26 @@ import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flame_audio/flame_audio.dart';
 import "package:flame/game.dart";
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+
+
 
 
 var foddacer="gemaplys";
 var rng=Random();
 int talking=0;
 
+
 class TalkingScreen extends StatefulWidget{
   @override
   _TalkingScreen createState()=> _TalkingScreen();
 }
+
+ SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _lastWords = '';
+
 
 
 class _TalkingScreen extends State<TalkingScreen>{
@@ -27,6 +37,47 @@ class _TalkingScreen extends State<TalkingScreen>{
     setState((){
       foddacer="saiko";
     });
+    _initSpeech();
+    });
+  }
+
+
+  void _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+      if(result.recognizedWords!=""){
+      startTalking();
+      _stopListening();
+      }
+  }
+
+
+     void grabCellphone() async{
+    talking=1;
+  }
+
+  void startTalking() async{
+    talking=2;
+
+    if(rng.nextInt(2)==0){
+    FlameAudio.bgm.play("sim$foddacer.mp3");
+    }else{
+      FlameAudio.bgm.play("nao$foddacer.mp3");
+    }
+
+    Future.delayed(Duration(milliseconds:800), (){
+      talking=0;
+      FlameAudio.bgm.stop();
     });
   }
 
@@ -43,6 +94,8 @@ class _TalkingScreen extends State<TalkingScreen>{
             onPressed:(){
               setState((){
                 foddacer="saiko";
+                talking=0;
+                _stopListening();
               });
             }
            ),
@@ -53,6 +106,8 @@ class _TalkingScreen extends State<TalkingScreen>{
             onPressed:(){
               setState((){
                 foddacer="gemaplys";
+                talking=0;
+                _stopListening();
               });
             }
            ),
@@ -63,43 +118,33 @@ class _TalkingScreen extends State<TalkingScreen>{
             onPressed:(){
               setState((){
                 foddacer="jean";
+                talking=0;
+                _stopListening();
               });
             }
           ),
          ),
-
         ]
       ),
-      body:GameWidget(game: TalkingGame())
+      body:GameWidget(game: TalkingGame()),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        child:Icon(Icons.call),
+        onPressed:(){
+          _startListening();
+          grabCellphone();
+        }
+      ),
     );
   }
 }
-   void grabCellphone() async{
-    talking=1;
-  }
-
-  void startTalking() async{
-    talking=2;
-
-    if(rng.nextInt(2)==0){
-    FlameAudio.bgm.play("sim${foddacer}.mp3");
-    }else{
-      FlameAudio.bgm.play("nao${foddacer}.mp3");
-    }
-
-    Future.delayed(Duration(milliseconds:650), (){
-      talking=0;
-      FlameAudio.bgm.stop();
-    });
-  }
 
 
-class TalkingGame extends FlameGame with HasTappables{
+class TalkingGame extends FlameGame {
   
   late SpriteAnimation idleAnimation;
   late SpriteAnimation cellphoneAnimation;
   late SpriteAnimation talkingAnimation;
-  late Button button=Button();
 
   late SpriteAnimationComponent character;
   late SpriteComponent background;
@@ -126,13 +171,6 @@ class TalkingGame extends FlameGame with HasTappables{
 
     add(character);
 
-    button=Button()
-    ..sprite=await loadSprite("button.webp")
-    ..size=Vector2(80, 80)
-    ..position=Vector2(screenWidth-100, screenHeight-100);
-
-    add(button);
-
   }
 
 
@@ -152,23 +190,6 @@ class TalkingGame extends FlameGame with HasTappables{
     
   }
 
-
-
   
 }
 
-
-class Button extends SpriteComponent with Tappable{
-  @override
-  onTapDown(TapDownInfo event){
-    try{
-      grabCellphone();
-      Future.delayed(Duration(seconds: rng.nextInt(6)+2), (){
-        startTalking();
-      });
-    }catch(error){
-      print(error);
-    }
-    return false;
-  }
-}

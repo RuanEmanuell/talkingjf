@@ -11,8 +11,10 @@ import 'dart:io';
 import "screens/talking.dart";
 
 void main() async{
-   WidgetsFlutterBinding.ensureInitialized();
-   await windowManager.ensureInitialized();
+
+  if(Platform.isWindows){
+  WidgetsFlutterBinding.ensureInitialized();
+  await windowManager.ensureInitialized();
   WindowOptions windowOptions = WindowOptions(
     size: Size(600, 800),
     center: true,
@@ -20,10 +22,12 @@ void main() async{
     skipTaskbar: false,
     titleBarStyle: TitleBarStyle.normal,
   );
+
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
     await windowManager.focus();
   });
+  }
 
   runApp(MaterialApp(
     home:TalkingScreen()
