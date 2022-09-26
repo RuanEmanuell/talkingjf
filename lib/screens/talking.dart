@@ -12,12 +12,12 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 
 
-
+//Variaveis compartilhadas entre o widget do flame e do flutter
 var foddacer="gemaplys";
 var rng=Random();
 int talking=0;
 
-
+//Widget do Flutter, controla o icone dos personagens em cima e o botão
 class TalkingScreen extends StatefulWidget{
   @override
   _TalkingScreen createState()=> _TalkingScreen();
@@ -25,9 +25,6 @@ class TalkingScreen extends StatefulWidget{
 
  SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
-  String _lastWords = '';
-
-
 
 class _TalkingScreen extends State<TalkingScreen>{
 
@@ -42,6 +39,7 @@ class _TalkingScreen extends State<TalkingScreen>{
   }
 
 
+  //Funções do text to speech
   void _initSpeech() async {
     _speechEnabled = await _speechToText.initialize();
   }
@@ -59,10 +57,11 @@ class _TalkingScreen extends State<TalkingScreen>{
       startTalking();
       _stopListening();
       }
+
   }
 
 
-     void grabCellphone() async{
+  void grabCellphone() async{
     talking=1;
   }
 
@@ -75,7 +74,7 @@ class _TalkingScreen extends State<TalkingScreen>{
       FlameAudio.bgm.play("nao$foddacer.mp3");
     }
 
-    Future.delayed(Duration(milliseconds:800), (){
+    Future.delayed(Duration(milliseconds:1000), (){
       talking=0;
       FlameAudio.bgm.stop();
     });
@@ -88,6 +87,7 @@ class _TalkingScreen extends State<TalkingScreen>{
         backgroundColor:Color.fromRGBO(97, 104, 223,1),
         elevation:0,
         actions:[
+          //Colocando os botões em cima
           Expanded(
             child: ElevatedButton(
             child:Image.asset("assets/images/saiko.png"),
@@ -126,15 +126,22 @@ class _TalkingScreen extends State<TalkingScreen>{
          ),
         ]
       ),
+      //Colocando o jogo em si(código abaixo)
       body:GameWidget(game: TalkingGame()),
-      floatingActionButton: FloatingActionButton(
+      //Colocando o botão de ligar
+      floatingActionButton:Container(
+      width:100,
+      height:100,
+      child:FloatingActionButton(
         backgroundColor: Colors.green,
-        child:Icon(Icons.call),
+        child:Icon(Icons.call, size:50),
         onPressed:(){
           _startListening();
           grabCellphone();
         }
       ),
+      )
+      
     );
   }
 }
@@ -147,7 +154,6 @@ class TalkingGame extends FlameGame {
   late SpriteAnimation talkingAnimation;
 
   late SpriteAnimationComponent character;
-  late SpriteComponent background;
 
   double characterSize=450;
 
@@ -155,16 +161,19 @@ class TalkingGame extends FlameGame {
   Future<void> onLoad() async{
     await super.onLoad();
 
+    //Pegando a largura e altura da tela, respectivamente
     var screenWidth=size[0];
     var screenHeight=size[1];
 
     final spriteSheet=SpriteSheet(image:await images.load("${foddacer}animation.png"), srcSize:Vector2(650,1100));
 
+    //Definindo as animações do personagem parado, falando e com o telefone
     idleAnimation=spriteSheet.createAnimation(row: 0,stepTime:1, to:1);
     talkingAnimation=spriteSheet.createAnimation(row: 1, stepTime:.4, to:2);
-    cellphoneAnimation=spriteSheet.createAnimation(row: 1, stepTime:.4, to:1);
+    cellphoneAnimation=spriteSheet.createAnimation(row: 1, stepTime:5, to:1);
 
   
+    //Carregando o personagem
     character=SpriteAnimationComponent()
     ..animation=cellphoneAnimation
     ..size=Vector2(screenWidth, screenHeight);
