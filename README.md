@@ -11,6 +11,8 @@ Foi feito em Flutter com a ajuda da biblioteca <a href="https://pub.dev/packages
 
 Você precisará de <a href="https://docs.flutter.dev/get-started/install">Flutter</a>, após inicializar em seu emulador ou dispositivo e <a href="https://docs .flutter.dev/get-started/codelab">iniciar um novo projeto do Flutter</a>, você transferirá os arquivos deste repositório para a pasta do seu projeto Flutter.
 
+PS: Lembre-se que o dispositivo que será usado deve ter acesso ao microfone, por isso eu recomendo testar em um celular e não em um emulador, já que será mais dificil a configuração
+
 ### Esse projeto foi feito apenas por estudos e diversão!!
 
 Se sintam livres pra modificar, esse projeto é direito do JF!
